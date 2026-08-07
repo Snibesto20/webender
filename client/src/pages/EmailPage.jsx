@@ -65,20 +65,14 @@ export const EmailPage = () => {
 
       const clientId = existingClient?._id || existingClient?.id;
 
-      if (existingClient) {
-        const hasEmail = existingClient.contacts?.some(
-          c => c.trim().toLowerCase() === trimmedEmail.toLowerCase()
-        );
-        if (!hasEmail && existingClient.contacts && existingClient.contacts.length > 0) {
-          throw new Error(t('email.clientExists', normalizedName));
-        }
-      }
-
       const result = await sendEmail({
         to: trimmedEmail,
         name: normalizedName,
         id: clientId,
         language: emailLang,
+        // Include custom subject and body if modified by admin
+        subject: previewDraft?.subject ? previewSubject : undefined,
+        body: previewDraft?.body ? previewBody : undefined,
       });
 
       if (!result.success) {
@@ -87,6 +81,7 @@ export const EmailPage = () => {
 
       setStatus({ type: 'success', msg: t('email.sendSuccess') });
       setForm({ to: '', name: '' });
+      setPreviewDraft(null);
 
     } catch (errObj) {
       setStatus({ type: 'error', msg: errObj.message || t('email.genericError') });

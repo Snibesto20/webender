@@ -1,5 +1,6 @@
 import express from 'express';
 import nodemailer from 'nodemailer';
+import dns from 'node:dns';
 import { auth } from '../middleware.js';
 import { User, Client } from '../models.js';
 import { ok, fail, normalizeDoc } from '../utils/response.js';
@@ -15,7 +16,7 @@ function createTransporter() {
     console.error('Email config missing: EMAIL_USER / EMAIL_PASS');
   }
 
-  // Use port 465 + SSL with connection pooling for better stability on cloud platforms like Render
+  // Explicit IPv4 lookup override prevents ENETUNREACH on cloud environments like Render
   return nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -23,7 +24,9 @@ function createTransporter() {
     pool: true,
     maxConnections: 3,
     auth: { user, pass },
-    family: 4,
+    lookup: (hostname, options, callback) => {
+      dns.lookup(hostname, { family: 4 }, callback);
+    },
     connectionTimeout: 10000,
     greetingTimeout: 10000,
     socketTimeout: 10000,
@@ -33,25 +36,26 @@ function createTransporter() {
 const transporter = createTransporter();
 
 router.post('/', auth(['admin', 'marketing']), async (req, res) => {
-  const { to, name, language } = req.body;
+  const { to, name, language, subject, body } = req.body;
 
   if (!to) return fail(res, 'EMAIL_RECIPIENT_REQUIRED', 400);
 
   const normalizedName = (name || '').trim().toUpperCase();
   const template = getEmailTemplate(language);
 
+  // Use custom subject/body if provided by frontend preview, otherwise fallback to template defaults
   const mailOptions = {
     from: `"${template.fromName}" <${process.env.EMAIL_USER}>`,
     to,
-    subject: template.subject,
-    text: template.body
+    subject: subject || template.subject,
+    text: body || template.body,
   };
 
   try {
     await transporter.sendMail(mailOptions);
 
     await User.findByIdAndUpdate(req.user._id, {
-      $inc: { emailsSent: 1 }
+      $inc: { emailsSent: 1 },
     });
 
     let syncedClient = null;
@@ -71,8 +75,8 @@ router.post('/', auth(['admin', 'marketing']), async (req, res) => {
               notes: '',
               moneyMade: 0,
               marketer: req.user.username || 'nenurodyta',
-              createdBy: req.user._id
-            }
+              createdBy: req.user._id,
+            },
           },
           { new: true, upsert: true }
         );
