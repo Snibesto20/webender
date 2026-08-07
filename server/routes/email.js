@@ -15,17 +15,18 @@ function createTransporter() {
     console.error('Email config missing: EMAIL_USER / EMAIL_PASS');
   }
 
-  // 587 + STARTTLS is more reliable on Render than 465 (often blocked/flaky)
+  // Use port 465 + SSL with connection pooling for better stability on cloud platforms like Render
   return nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    requireTLS: true,
+    port: 465,
+    secure: true,
+    pool: true,
+    maxConnections: 3,
     auth: { user, pass },
     family: 4,
-    connectionTimeout: 20000,
-    greetingTimeout: 15000,
-    socketTimeout: 20000,
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
   });
 }
 
@@ -57,29 +58,24 @@ router.post('/', auth(['admin', 'marketing']), async (req, res) => {
 
     if (normalizedName) {
       try {
-        const existingClient = await Client.findOne({ name: normalizedName });
         const trimmedTo = to.trim();
 
-        if (!existingClient) {
-          syncedClient = await Client.create({
-            name: normalizedName,
-            contacts: [trimmedTo],
-            tag: 'pending',
-            serviceNeeded: '',
-            notes: '',
-            moneyMade: 0,
-            marketer: req.user.username || 'nenurodyta',
-            createdBy: req.user._id
-          });
-        } else if (!existingClient.contacts.includes(trimmedTo)) {
-          syncedClient = await Client.findByIdAndUpdate(
-            existingClient._id,
-            { $push: { contacts: trimmedTo } },
-            { new: true }
-          );
-        } else {
-          syncedClient = existingClient;
-        }
+        // Single atomic operation to find/create client and append email without duplicates
+        syncedClient = await Client.findOneAndUpdate(
+          { name: normalizedName },
+          {
+            $addToSet: { contacts: trimmedTo },
+            $setOnInsert: {
+              tag: 'pending',
+              serviceNeeded: '',
+              notes: '',
+              moneyMade: 0,
+              marketer: req.user.username || 'nenurodyta',
+              createdBy: req.user._id
+            }
+          },
+          { new: true, upsert: true }
+        );
       } catch (dbErr) {
         console.error('Klaida sinchronizuojant klientą fone:', dbErr.message);
       }
