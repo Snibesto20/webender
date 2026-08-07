@@ -2,6 +2,13 @@ import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import dns from 'node:dns';
+
+// Force Node.js to resolve IPv4 addresses first globally
+dns.setDefaultResultOrder('ipv4first');
+
+// Optional: Set Google's public DNS servers directly
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 import authRoutes from './routes/auth.js';
 import clientRoutes from './routes/clients.js';
