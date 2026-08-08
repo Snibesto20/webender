@@ -13,7 +13,7 @@ Was wir für Ihr Unternehmen umsetzen können:
 • Eine schnelle Website, optimiert für Smartphones und Computer.
 • Grundlegende Google-Optimierung, damit Sie leichter gefunden werden.
 
-Zuerst erstellen wir eine voll funktionsfähige Vorschau. Wenn Ihnen das Ergebnis gefällt, fällt eine einmalige Einrichtungsgebühr von 30 EUR an. Danach beginnt ein 1-monatiger kostenloser Testzeitraum. Nach Ablauf des Testzeitraums kosten Wartung und Hosting 10 EUR pro Monat.
+Zuerst erstellen wir eine voll funktionsfähige Vorschau. Wenn Ihnen das Ergebnis gefällt, fällt nur eine einmalige Gebühr von 30 EUR an und keine monatliche Gebühr.
 
 Unsere bisherigen Arbeiten können Sie hier ansehen: https://webend.lt/
 

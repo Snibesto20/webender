@@ -13,7 +13,7 @@ Here is what we offer:
 • Fast load times optimized for both mobile devices and desktop.
 • Initial SEO setup so customers can find you on Google.
 
-How it works: We create a fully functional preview of your site first. If you like it, there is a one-time setup fee of €30, followed by a 1-month free trial. After the trial, hosting and maintenance are just €10 per month.
+How it works: We create a fully functional preview of your site first. If you like it, there is just a one-time fee of €30 and no monthly fee.
 
 Take a look at our portfolio: https://webend.lt/
 

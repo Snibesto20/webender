@@ -6,22 +6,16 @@ export default {
 
 Pastebėjome, kad jūsų verslas šiuo metu neturi internetinės svetainės.
 
-Šiandien dauguma klientų prieš pasirinkdami paslaugą pirmiausia pasitikrina informaciją internete. Jei svetainės nėra, dalis jų paprasčiausiai pasirenka kitą, labiau matomą variantą.
-
-Esame Webend komanda – kuriame modernias, greitas ir profesionaliai atrodančias svetaines, kurios padeda verslams atrodyti patikimiau ir sulaukti daugiau klientų užklausų.
+Esame Webend komanda - kuriame modernias, greitas ir profesionaliai atrodančias svetaines, kurios padeda verslams atrodyti patikimiau ir sulaukti daugiau klientų užklausų.
 
 Ką galime sukurti jūsų verslui:
-• Tvarkingą ir pasitikėjimą kuriantį dizainą
-• Greitai veikiančią svetainę, pritaikytą telefonams ir kompiuteriams
-• Aiškią struktūrą, kuri skatina klientus susisiekti
-• Sprendimus, kad jus būtų lengviau rasti Google paieškoje
+• Tvarkingą dizainą, kuris kuria pasitikėjimą.
+• Greitai veikiančią svetainę, pritaikytą telefonams ir kompiuteriams.
+• Sprendimus Google paieškai, kad jus būtų lengviau rasti.
 
-Svarbiausia – šiuo metu svetaines kuriame visiškai nemokamai.
-Tai darome tam, kad kauptume patirtį ir pildytume savo darbų portfolio.
-Taip pat padovanojame talpinimą, todėl nereikės mokėti jokių mėnesinių mokesčių.
+Pirmiausia nemokamai parodome pilnai veikiančios svetainės pavyzdį. Jei ji jums tinka, taikomas tik vienkartinis 30 eurų mokestis ir nėra jokių mėnesinių mokesčių.
 
-Mūsų darbus galite pamatyti čia: webend-lt.web.app
+Mūsų darbus galite pamatyti čia: https://webend.lt/
 
-Jeigu norėsite, galime nemokamai parodyti, kaip galėtų atrodyti jūsų svetainė.
-Ar būtų įdomu pamatyti?`,
+Ar būtų įdomu pamatyti, kaip galėtų atrodyti jūsų svetainė?`,
 };
